@@ -69,8 +69,15 @@ jobs:
             cd build
             ./compile.sh kernel BUILD_DESKTOP=no BUILD_MINIMAL=yes BRANCH=${{ inputs.kernel_version_type }} RELEASE=${{ inputs.version_codename }} BOARD=${{ inputs.target_board }} KERNEL_CONFIGURE=no
             
-        - name: (test) find debs
+        - name: Compress .deb Files
           env:
             DEBIAN_FRONTEND: noninteractive
           run: |
-            find . -name "*.deb"
+            sudo apt install p7zip-full
+            7z a ./kernel_deb.7z ./build/output/debs/*.deb
+
+        - name: Upload to Artifact
+          uses: actions/upload-artifact@v3.1.3
+          with:
+            name: Kernel DEBs
+            path: ./kernel_deb.7z
