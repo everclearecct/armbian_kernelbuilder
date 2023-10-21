@@ -1,0 +1,36 @@
+name: Build Armbian Kernel (non-ophub)
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      build_repo:
+        description: "Enter the build repo"
+        required: true
+        default: "https://github.com/armbian/build"
+        type: string
+      kernel_version_type:
+        description: "Select kernel type"
+        required: true
+        default: "current"
+        type: choice
+        options:
+          - current
+          - edge
+      target_board:
+         description: "Enter the build target (See https://github.com/armbian/build/tree/main/config/boards)"
+         required: true
+         type: string
+      version_codename:
+         description: "Enter the version codename (See https://github.com/armbian/build/tree/main/config/distributions)"
+         required: true
+         type: string
+         default: "bookworm"
+
+env:
+  TZ: America/New_York
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
