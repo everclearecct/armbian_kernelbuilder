@@ -67,5 +67,10 @@ jobs:
             DEBIAN_FRONTEND: noninteractive
           run: |
             cd build
-            ./compile.sh BUILD_ONLY="u-boot,kernel,armbian-config,armbian-zsh,plymouth-theme-armbian,armbian-firmware,armbian-bsp" BUILD_DESKTOP=no BUILD_MINIMAL=yes BRANCH=${{ inputs.kernel_version_type }} RELEASE=${{ inputs.version_codename }} BOARD=${{ inputs.target_board }} KERNEL_CONFIGURE=no
+            ./compile.sh KERNEL_ONLY=yes BUILD_DESKTOP=no BUILD_MINIMAL=yes BRANCH=${{ inputs.kernel_version_type }} RELEASE=${{ inputs.version_codename }} BOARD=${{ inputs.target_board }} KERNEL_CONFIGURE=no
             
+        - name: (test) find debs
+          env:
+            DEBIAN_FRONTEND: noninteractive
+          run: |
+            find . -name "*.deb"
