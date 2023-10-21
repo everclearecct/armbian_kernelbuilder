@@ -67,7 +67,7 @@ jobs:
             DEBIAN_FRONTEND: noninteractive
           run: |
             cd build
-            ./compile.sh KERNEL_ONLY=yes BUILD_DESKTOP=no BUILD_MINIMAL=yes BRANCH=${{ inputs.kernel_version_type }} RELEASE=${{ inputs.version_codename }} BOARD=${{ inputs.target_board }} KERNEL_CONFIGURE=no
+            ./compile.sh kernel BUILD_DESKTOP=no BUILD_MINIMAL=yes BRANCH=${{ inputs.kernel_version_type }} RELEASE=${{ inputs.version_codename }} BOARD=${{ inputs.target_board }} KERNEL_CONFIGURE=no
             
         - name: (test) find debs
           env:
